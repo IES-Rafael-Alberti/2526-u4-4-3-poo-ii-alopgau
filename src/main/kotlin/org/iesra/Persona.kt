@@ -10,7 +10,4 @@ class Persona(var listaCuentas: Array<Cuenta?>, val dni: String) {
         }
         return false
     }
-init {
-    listaCuentas = arrayOfNulls<Cuenta>(3)
-}
 }
