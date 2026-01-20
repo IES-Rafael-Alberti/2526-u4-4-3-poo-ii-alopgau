@@ -4,7 +4,7 @@ class Persona(var listaCuentas: Array<Cuenta?>, val dni: String) {
         private set
     fun anadirCuenta(cuenta: Cuenta): Boolean {
         if (this.cuentas < 3) {
-            listaCuentas[cuentas] = cuenta
+            this.listaCuentas[cuentas] = cuenta
             this.cuentas++
             return true
         }
