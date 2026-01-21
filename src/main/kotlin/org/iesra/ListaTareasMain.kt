@@ -5,8 +5,8 @@ fun leerEntrada(mensaje: String): String {
 }
 fun main() {
     val lista = ListaTareas(mutableListOf<Tarea>())
-    println("Elija una de las siguientes opciones. X para salir\n1) Añadir tarea\n2) Eliminar tarea\n3) Actualizar estado tarea\n4) Mostrar pendientes\n5)Mostrar realizadas\n6) Mostrar todas" )
     do {
+    println("Elija una de las siguientes opciones. X para salir\n1) Añadir tarea\n2) Eliminar tarea\n3) Actualizar estado tarea\n4) Mostrar pendientes\n5)Mostrar realizadas\n6) Mostrar todas" )
         var entrada = readln()
         when (entrada) {
             "1" -> lista.anadirTarea(Tarea(leerEntrada("Introduce la descripción de la tarea")))
