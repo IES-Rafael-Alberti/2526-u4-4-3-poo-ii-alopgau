@@ -9,23 +9,25 @@ class Partida (val j1: Jugador, val j2: Jugador) {
             arrayOfNulls<Ficha>(3),
             arrayOfNulls<Ficha>(3)
             )
-                 val casillasTablero = 9
+                 val casillasTablero = 8
     }
         var casillasOcupadas = 0
 
     fun jugarPartida() {
         var resultado = resultado(TABLERO)
-    while (resultado == null) {
+    while (resultado == null && casillasOcupadas < casillasTablero) {
         j1.jugarTurno(TABLERO)
         resultado = resultado(TABLERO)
+        if (resultado == null && casillasOcupadas < casillasTablero) {
         this.casillasOcupadas++
         this.imprimirTablero(TABLERO)
         j2.jugarTurno(TABLERO)
         resultado = resultado(TABLERO)
         this.casillasOcupadas++
+        }
         this.imprimirTablero(TABLERO)
         }
-        if (resultado == j1.ficha)println("El ganador es el jugador ${j1.id} ${(j1.nombre)}") else if (resultado == j2.ficha) println("El ganador es el jugador ${j2.id} ${(j2.nombre)}")
+        if (resultado == j1.ficha)println("El ganador es el jugador ${j1.id} ${(j1.nombre)}") else if (resultado == j2.ficha) println("El ganador es el jugador ${j2.id} ${(j2.nombre)}") else println("EMPATE")
         }
     private fun imprimirTablero(tablero: Array<Array<Ficha?>>) {
         for (i in tablero.indices) {

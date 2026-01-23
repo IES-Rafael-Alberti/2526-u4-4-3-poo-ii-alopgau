@@ -40,23 +40,29 @@ class Jugador(val nombre: String) {
             return fichas.filterNotNull().first()
         }
     }
+    private fun esCasillaOcupada(): Boolean {
+        println("Esta casilla está ocupada")
+        return false
+    }
+
     fun jugarTurno(tablero: Array<Array<Ficha?>>) {
         var entrada = -1
+        var valido = true
         do {
             println("Jugador ${id} (${nombre}).Introduce el número de la casilla que vas a jugar (1 al 9)")
             entrada = readln().toIntOrNull()?:-1
-        } while (entrada !in 1..9)
         when (entrada) {
 
-            1 -> if(tablero[0][0] == null)tablero[0][0]  = this.ficha else println("Esta casilla está ocupada")
-            2 -> if(tablero[0][1] == null)tablero[0][1]  = this.ficha else println("Esta casilla está ocupada")
-            3 -> if(tablero[0][2] == null)tablero[0][2]  = this.ficha else println("Esta casilla está ocupada")
-            4 -> if(tablero[1][0] == null)tablero[1][0]  = this.ficha else println("Esta casilla está ocupada")
-            5 -> if(tablero[1][1] == null)tablero[1][1]  = this.ficha else println("Esta casilla está ocupada")
-            6 -> if(tablero[1][2] == null)tablero[1][2]  = this.ficha else println("Esta casilla está ocupada")
-            7 -> if(tablero[2][0] == null)tablero[2][0]  = this.ficha else println("Esta casilla está ocupada")
-            8 -> if(tablero[2][1] == null)tablero[2][1]  = this.ficha else println("Esta casilla está ocupada")
-            9 -> if(tablero[2][2] == null)tablero[2][2]  = this.ficha else println("Esta casilla está ocupada")
+            1 -> if(tablero[0][0] == null)tablero[0][0]  = this.ficha else valido = esCasillaOcupada()
+            2 -> if(tablero[0][1] == null)tablero[0][1]  = this.ficha else valido = esCasillaOcupada()
+            3 -> if(tablero[0][2] == null)tablero[0][2]  = this.ficha else valido = esCasillaOcupada()
+            4 -> if(tablero[1][0] == null)tablero[1][0]  = this.ficha else valido = esCasillaOcupada()
+            5 -> if(tablero[1][1] == null)tablero[1][1]  = this.ficha else valido = esCasillaOcupada()
+            6 -> if(tablero[1][2] == null)tablero[1][2]  = this.ficha else valido = esCasillaOcupada()
+            7 -> if(tablero[2][0] == null)tablero[2][0]  = this.ficha else valido = esCasillaOcupada()
+            8 -> if(tablero[2][1] == null)tablero[2][1]  = this.ficha else valido = esCasillaOcupada()
+            9 -> if(tablero[2][2] == null)tablero[2][2]  = this.ficha else valido = esCasillaOcupada()
         }
+        } while (entrada !in 1..9 || !valido)
     }
 }
