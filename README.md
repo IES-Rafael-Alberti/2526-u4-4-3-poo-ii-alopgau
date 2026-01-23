@@ -1,95 +1,201 @@
 # Práctica 4.3: Programación orientada a objetos II
 
-Apóyate en los siguientes recursos para realizar la práctica:
-
-[U4: 3. POO II](https://revilofe.github.io/section1/u04/practica/PROG-U4.-Practica003/)
-
-> ATENCIÓN: DURANTE LA DOCUMENTACIÓN DE LA PRÁCTICA, ELIMINA TODO AQUELLO QUE NO APLIQUE. PEEEEEEEROOOOOOO, ANTES DE ELIMINAR ALGO, PIENSA SI APLICA O NO.
-
----
-
-# Título de la Actividad
-
 ## Identificación de la Actividad
 
-- **ID de la Actividad:** [ID de la actividad]
-- **Módulo:** [Nombre del módulo] (`PROG`, `IS`, `EDES`, etc.)
-- **Unidad de Trabajo:** [Número y nombre de la unidad de trabajo]
-- **Fecha de Creación:** [Fecha de creación]
-- **Fecha de Entrega:** [Fecha de entrega]
+- **ID de la Actividad:** 4.3
+- **Módulo:** PROG (Programación)
+- **Unidad de Trabajo:** U4 - Programación Orientada a Objetos II
+- **Fecha de Creación:** 19/01/26
+- **Fecha de Entrega:** 23/01/26
 - **Alumno(s):**
-  - **Nombre y Apellidos:** [Nombre y Apellidos del alumno o integrantes del grupo]
-  - **Correo electrónico:** [Correo electrónico g.educaand.es]
-  - **Iniciales del Alumno/Grupo:** [Iniciales del alumno o del grupo]
+  - **Nombre y Apellidos:** Antonio López Gautier
+  - **Correo electrónico:** alopgau418@g.educaand.es
+  - **Iniciales del Alumno/Grupo:** ALG
 
 ## Descripción de la Actividad
 
-[Descripción detallada de la actividad, objetivos, y contexto necesario para comprenderla. Explicar en qué consiste la actividad y qué se espera que el alumno desarrolle o implemente.]
+Esta práctica implementa diversos conceptos de programación orientada a objetos en Kotlin, incluyendo:
+
+1. **Sistema de compras y clientes** con repositorios y domicilios
+2. **Gestión de libros** con un sistema de puntuación
+3. **Sistema bancario** con cuentas, personas y transferencias
+4. **Sistema de tareas** con estados y gestión
+5. **Juego de Tres en Raya** completo con jugadores y lógica de juego
+
+Cada módulo demuestra diferentes aspectos de POO como clases, objetos, herencia implícita con data classes, enums, companion objects, y relaciones entre objetos.
 
 ## Instrucciones de Compilación y Ejecución
 
-1. **Requisitos Previos:**
+### Requisitos Previos:
+- Kotlin 1.8+ o Java 17+ con Kotlin plugin
+- IDE recomendado: IntelliJ IDEA o Android Studio
+- O compilador de línea de comandos `kotlinc`
 
-   - [Lenguaje de programación y versión]
-   - [Entorno de desarrollo o dependencias necesarias]
-2. **Pasos para Compilar el Código:**
+### Pasos para Compilación y Ejecución:
 
-   ```bash
-   [Comando para compilar el código]
-   ```
-3. **Pasos para Ejecutar el Código:**
+#### Opción 1: Desde IntelliJ IDEA/Android Studio
+1. Abrir el proyecto en el IDE
+2. Navegar al archivo principal deseado (`LibroMain.kt`, `ListaTareasMain.kt`, etc.)
+3. Ejecutar con el botón "Run" o menú contextual
 
-   ```bash
-   [Comando para ejecutar la aplicación]
-   ```
-4. **Ejecución de Pruebas:**
+#### Opción 2: Línea de comandos
+```bash
+# Compilar todos los archivos Kotlin
+kotlinc *.kt -include-runtime -d Practica4.3.jar
 
-   ```bash
-   [Comandos para ejecutar pruebas, si las hubiera]
-   ```
+# Ejecutar programas específicos:
+# Para el sistema de libros:
+kotlin LibroMainKt
+
+# Para el sistema de tareas:
+kotlin ListaTareasMainKt
+
+# Para el sistema de compras:
+kotlin MainComprasKt
+
+# Para el sistema de cuentas:
+kotlin MainCuentaKt
+
+# Para el Tres en Raya:
+kotlin TresEnRayaKt
+```
 
 ## Desarrollo de la Actividad
 
-### Descripción del Desarrollo
+### Estructura del Proyecto:
+El proyecto contiene múltiples sistemas independientes pero relacionados conceptualmente con POO:
 
-[Explicación de cómo se ha abordado el desarrollo de la actividad, incluyendo las decisiones de diseño, estructura del código y enfoque de resolución de problemas. Se recomienda adjuntar diagramas o capturas de pantalla si es necesario.]
+1. **Sistema de Compras** (`Compras.kt`, `MainCompras.kt`)
+2. **Sistema de Libros** (`Libro.kt`, `ConjuntoLibros.kt`, `LibroMain.kt`)
+3. **Sistema Bancario** (`Cuenta.kt`, `Persona.kt`, `MainCuenta.kt`)
+4. **Sistema de Tareas** (`Tarea.kt`, `EstadoTarea.kt`, `ListaTareas.kt`, `ListaTareasMain.kt`)
+5. **Juego Tres en Raya** (`Ficha.kt`, `Jugador.kt`, `Partida.kt`, `TresEnRaya.kt`)
 
-### Código Fuente
+### Conceptos Implementados:
 
-[Aquí se incluirá un enlace directo a los archivos de código fuente en el repositorio, por ejemplo, si se está usando GitHub: `src/main.kt` o algún enlace directo.]
+#### 1. Data Classes y Inmutabilidad
+```kotlin
+data class Compra(val cliente: Cliente, val dia: Int, val monto: Float)
+data class Domicilio(val calle: String, val numero: String)
+```
+- Uso de `data class` para objetos de valor
+- Propiedades inmutables (`val`)
+- Métodos generados automáticamente (`equals()`, `hashCode()`, `toString()`)
 
-[Si hay varios ejercicios, habrá una documentación, por cada uno de los ejercicios.]
-[Por cada ejercicio, habrá enlaces embebidos de código a las clases principales y programa principal `main` ]
+#### 2. Enums y Pattern Matching
+```kotlin
+enum class EstadoTarea { Pendiente, Realizada }
+enum class Ficha { CRUZ, CIRCULO }
+```
+- Enumeraciones para estados finitos
+- When expressions para manejo de casos
+
+#### 3. Companion Objects y Métodos Estáticos
+```kotlin
+companion object {
+    const val limiteLibros = 5
+    fun esMorosa(persona: Persona): Boolean
+}
+```
+- Constantes asociadas a clases
+- Métodos de utilidad (factory methods, helpers)
+
+#### 4. Validación con `require()`
+```kotlin
+init {
+    require(nota > 0 && nota < 10)
+}
+```
+- Validación en tiempo de inicialización
+- Lanzamiento de excepciones descriptivas
+
+#### 5. Null Safety y Safe Calls
+```kotlin
+val libroBuscado = conjunto.indexOfFirst {it?.titulo == titulo && it.autor == autor }
+this.conjunto.filterNotNull().forEach { println(it) }
+```
+- Manejo seguro de valores nulos
+- Filtrado de colecciones con `filterNotNull()`
 
 ### Ejemplos de Ejecución
 
-- **Entrada 1:** Descripción de la entrada y valor de prueba.
-- **Salida Esperada 1:** Explicación de la salida esperada y el resultado de la prueba.
+#### Sistema de Libros:
+**Entrada:** Ejecución automática del programa `LibroMain.kt`
+**Salida Esperada:**
+```
+Libros añadidos:
+Título: El Quijote Autor: Cervantes Páginas: 800 Nota: 3
+Título: El Señor de los Anillos Autor: J.R.R Tolkien Páginas: 450 Nota: 8
+Libros eliminados
+Título: El camino de los reyes Autor: Brandon Sanderson Páginas: 756 Nota: 7
+```
 
-### Resultados de Pruebas
+#### Sistema de Tareas:
+**Entrada:** Interactiva con menú de opciones
+```
+1) Añadir tarea
+2) Eliminar tarea
+3) Actualizar estado tarea
+4) Mostrar pendientes
+5) Mostrar realizadas
+6) Mostrar todas
+```
+**Salida:** Gestión completa de tareas con estados
 
-[Aquí se detallará cómo se ha verificado la funcionalidad del código, incluyendo resultados de pruebas automatizadas o manuales, en caso de que las haya.]
+#### Juego Tres en Raya:
+**Entrada:** Interactiva por consola
+```
+El jugador 1 (pepe) eligirá su ficha (CIRCULO o CRUZ)
+Jugador 1 (pepe). Introduce el número de la casilla que vas a jugar (1 al 9)
+```
+**Salida:** Tablero gráfico y resultado final
+
+## Resultados de Pruebas
+
+### Pruebas Realizadas:
+1. ✅ Creación y eliminación de libros en `ConjuntoLibros`
+2. ✅ Gestión de estados de tareas (Pendiente ↔ Realizada)
+3. ✅ Transferencias bancarias entre cuentas
+4. ✅ Validación de jugadores en Tres en Raya (máximo 2)
+5. ✅ Detección de morosidad en cuentas
+6. ✅ Colección de domicilios únicos en compras
+
+### Casos Límite Probados:
+- Añadir más elementos del límite permitido
+- Eliminar elementos inexistentes
+- Jugadas en casillas ocupadas
+- Transferencias con saldo insuficiente
 
 ## Documentación Adicional
 
-- **Manual de Usuario:** [Enlace a la documentación del usuario, si existe]
-- **Autorización de Permisos:** Verificar que el profesor tenga permisos de lectura en el repositorio para revisar el código.
+### Archivos Principales:
+- **`Compras.kt`**: Sistema de compras y clientes
+- **`ConjuntoLibros.kt`**: Gestión de colección de libros
+- **`Cuenta.kt`** y **`Persona.kt`**: Sistema bancario
+- **`Tarea.kt`** y **`ListaTareas.kt`**: Gestor de tareas
+- **`Partida.kt`** y **`Jugador.kt`**: Lógica del Tres en Raya
 
 ## Conclusiones
 
-[Resumen de las conclusiones alcanzadas al desarrollar la actividad, las lecciones aprendidas, y posibles mejoras que se puedan implementar en futuras entregas.]
+Esta práctica ha permitido implementar y consolidar conceptos avanzados de POO en Kotlin:
+
+1. **Data classes** son ideales para objetos de valor inmutables
+2. **Null safety** de Kotlin previene errores comunes
+3. **Extension functions** podrían mejorar la legibilidad
+4. **Sealed classes** serían útiles para manejar estados más complejos
+5. El sistema de **companion objects** ofrece una alternativa flexible a métodos estáticos
+
+Las principales mejoras identificadas:
+- Implementar interfaces para mayor flexibilidad
+- Añadir más validaciones y manejo de errores
+- Separar lógica de UI de lógica de negocio en el Tres en Raya
+- Implementar persistencia de datos
 
 ## Referencias y Fuentes
 
-[Aquí se listarán las fuentes consultadas para el desarrollo de la actividad, tales como documentación oficial, artículos, o cualquier recurso externo relevante.]
+1. Documentación Oficial de Kotlin: https://kotlinlang.org/docs/home.html
+2. U4: 3. POO II - Material del curso
 
-### Notas Adicionales:
+---
 
-1. **Nombres de Archivos y Repositorios:**
-   - Asegúrate de que el nombre del archivo o repositorio siga la estructura definida: `XXX-idActividad-Iniciales`.
-2. **Permisos:**
-   - Verifica que el profesor tenga los permisos necesarios para acceder al repositorio o documento.
-3. **Formato:**
-   - Si se entrega en formato PDF o Google Docs, asegúrate de cumplir con el mínimo y máximo de folios establecidos.
-4. **Compilación y Ejecución:**
-   - Detalla claramente cómo compilar y ejecutar el código, incluyendo las instrucciones en el archivo `README.md`.
+**Nota:** Todos los archivos .kt están en el paquete `org.iesra` y son independientes entre sí, permitiendo ejecutar cada sistema por separado según las necesidades.
